@@ -10,6 +10,7 @@
     "test": "jest"
   },
   "dependencies": {
+    "@iadvize-oss/iadvize-react-native-sdk": "^3.1.1",
     "react": "18.2.0",
     "react-native": "0.71.5"
   },
