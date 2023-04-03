@@ -325,3 +325,24 @@ Then you can activate using the relevant API:
 
 IAdvizeSDK.activate(projectId, userId, gdprUrl);
 ```
+
+### Step 6 - Trigger engagement
+
+Add the ConversationChannel import statement:
+
+```
+# App.tsx
+
+import IAdvizeSDK, { LogLevel, ConversationChannel } from '@iadvize-oss/iadvize-react-native-sdk';
+```
+
+Then you can engage the visitor using the relevant API:
+
+```
+# App.tsx
+
+IAdvizeSDK.setLanguage("targetingLanguage");
+IAdvizeSDK.activateTargetingRule("targetingRuleId", ConversationChannel.CHAT);
+```
+
+This will display the Default Floating Button that leads to the Chatbox.

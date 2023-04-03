@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
-import IAdvizeSDK, { LogLevel } from '@iadvize-oss/iadvize-react-native-sdk';
+import IAdvizeSDK, { LogLevel, ConversationChannel } from '@iadvize-oss/iadvize-react-native-sdk';
 
 const styles = StyleSheet.create({
   container: {
@@ -16,6 +16,10 @@ const idzConfig = {
   projectId: -1, // TODO Replace with your project id
   userId: "user-unique-identifier", // TODO Replace with relevant user id
   gdprUrl: "http://dummy.url/gdpr", // TODO Replace with your own GDPR URL
+
+  targetingRuleId: "targeting-rule-uuid", // TODO Replace with relevant targeting rule id
+  targetingLanguage : 'en', // TODO Replace with relevant targeting rule language
+  targetingRuleChannel: ConversationChannel.CHAT // TODO Replace with relevant targeting rule channel
 };
 
 export default function App() {
@@ -39,6 +43,11 @@ export default function App() {
     }
   };
 
+  const triggerTargetingRule = async () => {
+    IAdvizeSDK.setLanguage(idzConfig.targetingLanguage);
+    IAdvizeSDK.activateTargetingRule(idzConfig.targetingRuleId, idzConfig.targetingRuleChannel);
+  };
+
   useEffect(() => {
     // Set iAdvize SDK log level to verbose
     IAdvizeSDK.setLogLevel(idzConfig.logLevel);
@@ -46,6 +55,9 @@ export default function App() {
     if (!isSDKActivated) {
       // Activate iAdvize SDK
       activateSDK();
+    } else {
+      // When activated, trigger an engagement
+      triggerTargetingRule();
     }
   }, []);
 
