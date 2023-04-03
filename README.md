@@ -137,3 +137,30 @@ RCT_NEW_ARCH_ENABLED=0
 USE_HERMES=0
 NO_FLIPPER=1
 ```
+
+#### Step 3.3 - Enable Swift Library Evolution support
+
+Add this step inside the `post_install` hook at the end of the `Podfile` to enable Swift Library Evolution:
+
+```
+# ios/Podfile
+
+post_install do |installer|
+  react_native_post_install(
+    installer,
+    # Set `mac_catalyst_enabled` to `true` in order to apply patches
+    # necessary for Mac Catalyst builds
+    :mac_catalyst_enabled => false
+  )
+  __apply_Xcode_12_5_M1_post_install_workaround(installer)
+
+  # Add those lines
+  installer.pods_project.targets.each do |target|
+    target.build_configurations.each do |config|
+      config.build_settings['BUILD_LIBRARY_FOR_DISTRIBUTION'] = 'YES'
+    end
+  end
+end
+```
+
+Library evolution support allows developers of binary frameworks to make additive changes to the API of their framework while remaining binary compatible with previous versions.
