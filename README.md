@@ -305,3 +305,23 @@ public class MainApplication extends Application implements ReactApplication {
   }
 }
 ```
+
+### Step 5 - Activate the SDK
+
+Add the IAdvize SDK import statement:
+
+```
+# App.tsx
+
+import IAdvizeSDK, {
+  LogLevel
+} from '@iadvize-oss/iadvize-react-native-sdk';
+```
+
+Then you can activate using the relevant API:
+
+```
+# App.tsx
+
+IAdvizeSDK.activate(projectId, userId, gdprUrl);
+```
