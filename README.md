@@ -74,3 +74,33 @@ This will add the dependency inside the `package.json` file
   "react-native": "0.71.5"
 },
 ```
+
+### Step 3 - Configure iOS project
+
+There are multiple ways to configure a ReactNative project, for simplicity this guide will simply hardcode the configuration, please note that you can use a configuration plugin using environment variables (like `react-native-config` or `react-native-dotenv`).
+
+#### Step 3.1 - Add use_frameworks! directive
+
+The iAdvize iOS SDK is delivered as a binary framework (in an XCFramework bundle), which is a standard way of distributing closed-source binaries. ReactNative is using the CocoaPods package manager and in order for it to work with binary frameworks, the directive `use_frameworks!` must be added in the `Podfile`:
+
+```
+# ios/Podfile
+
+# Comment those lines
+linkage = ENV['USE_FRAMEWORKS']
+if linkage != nil
+  Pod::UI.puts "Configuring Pod with #{linkage}ally linked Frameworks".green
+  use_frameworks! :linkage => linkage.to_sym
+end
+
+# And add this one
+use_frameworks!
+```
+
+If you are using an environment variable plugin you should be able to set the same behavior by adding the following line in your `.env` file:
+
+```
+# .env
+
+USE_FRAMEWORKS='dynamic'
+```
