@@ -211,3 +211,67 @@ allprojects {
   }
 }
 ```
+
+#### Step 4.2 - Setup Kotlin
+
+The latest iAdvize Android SDK used Kotlin `1.8.10`. To avoid conflict between the Kotlin versions used in the ReactNative dependencies we need to set this version in the Android configuration.
+
+First in the project-level `android/build.gradle` file, add the kotlin version in the `buildscript > ext` block:
+
+```
+# android/build.gradle
+
+buildscript {
+  ext {
+    buildToolsVersion = "33.0.0"
+    minSdkVersion = 21
+    compileSdkVersion = 33
+    targetSdkVersion = 33
+
+    // Add this line
+    kotlinVersion = '1.8.10'
+  }
+  ...
+}
+```
+
+Add the kotlin gradle plugin in the `buildscript > dependencies` block:
+
+```
+# android/build.gradle
+
+buildscript {
+  ...
+  dependencies {
+    classpath("com.android.tools.build:gradle:7.3.1")
+    classpath("com.facebook.react:react-native-gradle-plugin")
+    // Add this line
+    classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlinVersion")
+  }
+}
+```
+
+Then in the module-level `android/app/build.gradle` activate the Kotlin plugin at the top of the file:
+
+```
+# android/app/build.gradle
+
+apply plugin: "com.android.application"
+apply plugin: "com.facebook.react"
+// Add this line
+apply plugin: "kotlin-android"
+```
+
+Add the kotlin dependency in the `dependencies` block:
+
+```
+# android/app/build.gradle
+
+dependencies {
+  // Add this line
+  implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlinVersion"
+
+  ...
+}
+```
+
