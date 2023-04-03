@@ -104,3 +104,36 @@ If you are using an environment variable plugin you should be able to set the sa
 
 USE_FRAMEWORKS='dynamic'
 ```
+
+#### Step 3.2 - Disable Hermes & Flipper
+
+Hermes and Flipper are not compatible (or at least unstable) when using `use_frameworks!` on iOS. Thus they need to be disabled:
+
+```
+# ios/Podfile
+
+target 'IntegrationDemoApp' do
+  config = use_native_modules!
+
+  # Flags change depending on the env values.
+  flags = get_default_flags()
+
+  use_react_native!(
+    :hermes_enabled => false,
+    :flipper_configuration => FlipperConfiguration.disabled,
+
+    ...
+  )
+  ...
+end
+```
+
+If you are using an environment variable plugin you should be able to set the same behavior by adding the following line in your `.env` file:
+
+```
+# .env
+
+RCT_NEW_ARCH_ENABLED=0
+USE_HERMES=0
+NO_FLIPPER=1
+```
