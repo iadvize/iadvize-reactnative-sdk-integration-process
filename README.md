@@ -66,7 +66,7 @@ npm install @iadvize-oss/iadvize-react-native-sdk
 This will add the dependency inside the `package.json` file
 
 ```
-# package.json
+$ package.json
 
 "dependencies": {
   "@iadvize-oss/iadvize-react-native-sdk": "^3.1.1",
@@ -84,7 +84,7 @@ There are multiple ways to configure a ReactNative project, for simplicity this 
 The iAdvize iOS SDK is delivered as a binary framework (in an XCFramework bundle), which is a standard way of distributing closed-source binaries. ReactNative is using the CocoaPods package manager and in order for it to work with binary frameworks, the directive `use_frameworks!` must be added in the `Podfile`:
 
 ```
-# ios/Podfile
+$ ios/Podfile
 
 # Comment those lines
 linkage = ENV['USE_FRAMEWORKS']
@@ -100,7 +100,7 @@ use_frameworks!
 If you are using an environment variable plugin you should be able to set the same behavior by adding the following line in your `.env` file:
 
 ```
-# .env
+$ .env
 
 USE_FRAMEWORKS='dynamic'
 ```
@@ -110,7 +110,7 @@ USE_FRAMEWORKS='dynamic'
 Hermes and Flipper are not compatible (or at least unstable) when using `use_frameworks!` on iOS. Thus they need to be disabled:
 
 ```
-# ios/Podfile
+$ ios/Podfile
 
 target 'IntegrationDemoApp' do
   config = use_native_modules!
@@ -131,7 +131,7 @@ end
 If you are using an environment variable plugin you should be able to set the same behavior by adding the following line in your `.env` file:
 
 ```
-# .env
+$ .env
 
 RCT_NEW_ARCH_ENABLED=0
 USE_HERMES=0
@@ -143,7 +143,7 @@ NO_FLIPPER=1
 Add this step inside the `post_install` hook at the end of the `Podfile` to enable Swift Library Evolution:
 
 ```
-# ios/Podfile
+$ ios/Podfile
 
 post_install do |installer|
   react_native_post_install(
@@ -180,7 +180,8 @@ cd ..
 Since the version 2.5.0, the iAdvize iOS SDK supports video conversations. Thus it will request camera and microphone access before entering a video call. To prevent the app from crashing at this stage, you have to setup two keys in your app `Info.plist`:
 
 ```
-# ios/IntegrationDemoApp/Info.plist
+$ ios/IntegrationDemoApp/Info.plist
+
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
@@ -201,7 +202,7 @@ Since the version 2.5.0, the iAdvize iOS SDK supports video conversations. Thus 
 The iAdvize Android SDK is hosted on GitHub, this repository should be declared in the Android app in order for it to find the SDK artifacts:
 
 ```
-# android/build.gradle
+$ android/build.gradle
 
 // Add those lines after the `buildscript` block
 allprojects {
@@ -214,12 +215,12 @@ allprojects {
 
 #### Step 4.2 - Setup Kotlin
 
-The latest iAdvize Android SDK used Kotlin `1.8.10`. To avoid conflict between the Kotlin versions used in the ReactNative dependencies we need to set this version in the Android configuration.
+The latest iAdvize Android SDK used Kotlin `1.8.10`. To avoid conflict between the Kotlin versions used in the ReactNative dependencies, this version needs to be set in the Android configuration.
 
-First in the project-level `android/build.gradle` file, add the kotlin version in the `buildscript > ext` block:
+First in the project-level `android/build.gradle` file, add the Kotlin version in the `buildscript > ext` block:
 
 ```
-# android/build.gradle
+$ android/build.gradle
 
 buildscript {
   ext {
@@ -235,10 +236,10 @@ buildscript {
 }
 ```
 
-Add the kotlin gradle plugin in the `buildscript > dependencies` block:
+Add the Kotlin gradle plugin in the `buildscript > dependencies` block:
 
 ```
-# android/build.gradle
+$ android/build.gradle
 
 buildscript {
   ...
@@ -254,7 +255,7 @@ buildscript {
 Then in the module-level `android/app/build.gradle` activate the Kotlin plugin at the top of the file:
 
 ```
-# android/app/build.gradle
+$ android/app/build.gradle
 
 apply plugin: "com.android.application"
 apply plugin: "com.facebook.react"
@@ -262,14 +263,14 @@ apply plugin: "com.facebook.react"
 apply plugin: "kotlin-android"
 ```
 
-Add the kotlin dependency in the `dependencies` block:
+Add the Kotlin dependency in the `dependencies` block:
 
 ```
-# android/app/build.gradle
+$ android/app/build.gradle
 
 dependencies {
   // Add this line
-  implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlinVersion"
+  implementation("org.jetbrains.kotlin:kotlin-stdlib:$kotlinVersion")
 
   ...
 }
@@ -281,7 +282,7 @@ On Android, the iAdvize SDK needs to be initiated during the app startup to allo
 Thus you need to add those lines in `android/app/src/main/java/com/integrationdemoapp/MainApplication.java` to initialize the SDK properly:
 
 ```
-# android/app/src/main/java/com/integrationdemoapp/MainApplication.java
+$ android/app/src/main/java/com/integrationdemoapp/MainApplication.java
 
 // Add this line
 import com.iadvize.conversation.sdk.IAdvizeSDK;
@@ -311,7 +312,7 @@ public class MainApplication extends Application implements ReactApplication {
 Add the IAdvize SDK import statement:
 
 ```
-# App.tsx
+$ App.tsx
 
 import IAdvizeSDK, {
   LogLevel
@@ -321,7 +322,7 @@ import IAdvizeSDK, {
 Then you can activate using the relevant API:
 
 ```
-# App.tsx
+$ App.tsx
 
 IAdvizeSDK.activate(projectId, userId, gdprUrl);
 ```
@@ -331,7 +332,7 @@ IAdvizeSDK.activate(projectId, userId, gdprUrl);
 Add the ConversationChannel import statement:
 
 ```
-# App.tsx
+$ App.tsx
 
 import IAdvizeSDK, { LogLevel, ConversationChannel } from '@iadvize-oss/iadvize-react-native-sdk';
 ```
@@ -339,7 +340,7 @@ import IAdvizeSDK, { LogLevel, ConversationChannel } from '@iadvize-oss/iadvize-
 Then you can engage the visitor using the relevant API:
 
 ```
-# App.tsx
+$ App.tsx
 
 IAdvizeSDK.setLanguage("targetingLanguage");
 IAdvizeSDK.activateTargetingRule("targetingRuleId", ConversationChannel.CHAT);
