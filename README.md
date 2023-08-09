@@ -74,3 +74,16 @@ $ package.json
   "react-native": "0.71.5"
 },
 ```
+
+### Step 3 - Configure iOS project
+
+#### Step 3.1 - Update minimum supported platform
+
+The iAdvize iOS SDK support down to iOS 13 so this minimum supported platform must be set into the `Podfile`:
+
+```
+$ ios/Podfile
+
+# Update this lines
+platform :ios, '13.0'
+```
