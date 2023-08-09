@@ -87,3 +87,23 @@ $ ios/Podfile
 # Update this lines
 platform :ios, '13.0'
 ```
+
+#### Step 3.2 - Add microphone and camera permissions
+
+Since the version 2.5.0, the iAdvize iOS SDK supports video conversations. Thus it will request camera and microphone access before entering a video call. To prevent the app from crashing at this stage, you have to setup two keys in your app `Info.plist`:
+
+```
+$ ios/IntegrationDemoApp/Info.plist
+
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+  <dict>
+    ...
+    <key>NSCameraUsageDescription</key>
+    <string>This application will use the camera to share photos and during video calls.</string>
+    <key>NSMicrophoneUsageDescription</key>
+    <string>This application will use the microphone during video calls.</string>
+  </dict>
+</plist>
+```
