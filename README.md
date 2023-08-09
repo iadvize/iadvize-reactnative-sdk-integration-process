@@ -107,3 +107,13 @@ $ ios/IntegrationDemoApp/Info.plist
   </dict>
 </plist>
 ```
+
+#### Step 3.3 - Download native iOS SDK pod
+
+Once this is done, is it possible to download the iOS dependency pod:
+
+```
+cd ios
+pod install
+cd ..
+```
