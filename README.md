@@ -54,3 +54,23 @@ npx react-native run-ios
 # ... or Android
 npx react-native run-android
 ```
+
+### Step 2 - Add the SDK ReactNative plugin
+
+To integrate the iAdvize SDK ReactNative Plugin inside the demo project, run the following command:
+
+```
+npm install @iadvize-oss/iadvize-react-native-sdk
+```
+
+This will add the dependency inside the `package.json` file
+
+```
+$ package.json
+
+"dependencies": {
+  "@iadvize-oss/iadvize-react-native-sdk": "^3.3.0",
+  "react": "18.2.0",
+  "react-native": "0.71.5"
+},
+```
