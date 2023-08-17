@@ -178,3 +178,39 @@ org.gradle.parallel=true
 kotlin.code.style=official
 android.nonTransitiveRClass=false
 ```
+
+#### Step 4.2 - Configure Android
+
+The latest iAdvize Android SDK is compiled using Android API 33, you will need to modify the Android configuration.
+First in the project-level `android/build.gradle` file, update the `buildscript > ext` block to:
+
+```
+$ android/build.gradle
+
+buildscript {
+  ext {
+    buildToolsVersion = "33.0.2"
+    minSdkVersion = 21
+    compileSdkVersion = 33
+    targetSdkVersion = 33
+    ndkVersion = "21.4.7075529"
+  }
+  ...
+}
+```
+
+As of Android 12 the `exported` attribute must be explicitly declared in the `AndroidManifest.xml`:
+
+```
+$ android/app/src/main/AndroidManifest.xml
+
+  <activity
+    android:name=".MainActivity"
+    android:label="@string/app_name"
+    android:configChanges="keyboard|keyboardHidden|orientation|screenSize|uiMode"
+    android:launchMode="singleTask"
+    android:exported="true" // Add this line
+    android:windowSoftInputMode="adjustResize">
+
+    ...
+```
