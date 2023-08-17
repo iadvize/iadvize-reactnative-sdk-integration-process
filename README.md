@@ -136,3 +136,45 @@ allprojects {
   }
 }
 ```
+
+#### Step 4.2 - Configure Gradle
+
+ReactNative 0.66 uses Gradle 6.9 but the iAdvize Android SDK needs Gradle 7 or newer.
+
+First of all configure the gradle wrapper to use Gradle 7:
+
+```
+$ android/gradle/wrapper/gradle-wrapper.properties
+
+distributionBase=GRADLE_USER_HOME
+distributionPath=wrapper/dists
+distributionUrl=https\://services.gradle.org/distributions/gradle-7.3-all.zip // Modify this line
+zipStoreBase=GRADLE_USER_HOME
+zipStorePath=wrapper/dists
+```
+
+Then you can update the Gradle Android plugin to a higher version :
+
+```
+$ android/build.gradle
+
+buildscript {
+  ...
+  dependencies {
+    classpath("com.android.tools.build:gradle:7.0.0") // Modify this line
+  }
+}
+```
+
+Update the Gradle properties:
+
+```
+$ android/gradle.properties
+
+org.gradle.caching=true
+org.gradle.daemon=true
+org.gradle.jvmargs=-Xms1024m -Xmx4096m -XX:+HeapDumpOnOutOfMemoryError -Dfile.encoding=UTF-8 -XX:+UseParallelGC
+org.gradle.parallel=true
+kotlin.code.style=official
+android.nonTransitiveRClass=false
+```
