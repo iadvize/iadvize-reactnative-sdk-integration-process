@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import { StyleSheet, Text, View } from 'react-native';
-import IAdvizeSDK, { LogLevel } from '@iadvize-oss/iadvize-react-native-sdk';
+import { Button, StyleSheet, Text, View } from 'react-native';
+import IAdvizeSDK, { ConversationChannel, LogLevel } from '@iadvize-oss/iadvize-react-native-sdk';
 
 const styles = StyleSheet.create({
   container: {
@@ -16,6 +16,10 @@ const idzConfig = {
   projectId: -1, // TODO Replace with your project id
   userId: "user-unique-identifier", // TODO Replace with relevant user id
   gdprUrl: "http://dummy.url/gdpr", // TODO Replace with your own GDPR URL
+
+  targetingRuleId: "targeting-rule-uuid", // TODO Replace with relevant targeting rule id
+  targetingLanguage : 'en', // TODO Replace with relevant targeting rule language
+  targetingRuleChannel: ConversationChannel.CHAT // TODO Replace with relevant targeting rule channel
 };
 
 export default function App() {
@@ -29,6 +33,10 @@ export default function App() {
     }
   };
 
+  const TargetingButton = () => {
+    return <Button onPress={triggerTargetingRule} title="Engage visitor" disabled={!isSDKActivated} />
+  };
+
   const activateSDK = async () => {
     try {
       await IAdvizeSDK.activate(idzConfig.projectId, idzConfig.userId, idzConfig.gdprUrl);
@@ -37,6 +45,11 @@ export default function App() {
       console.error(e);
       setIsSDKActivated(false);
     }
+  };
+
+  const triggerTargetingRule = async () => {
+    IAdvizeSDK.setLanguage(idzConfig.targetingLanguage);
+    IAdvizeSDK.activateTargetingRule(idzConfig.targetingRuleId, idzConfig.targetingRuleChannel);
   };
 
   useEffect(() => {
@@ -52,6 +65,7 @@ export default function App() {
   return (
     <View style={styles.container}>
       <ActivationLabel />
+      <TargetingButton />
     </View>
   );
 }
