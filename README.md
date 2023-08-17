@@ -275,3 +275,31 @@ dependencies {
 }
 ```
 
+#### Step 4.4 - Initiate the SDK
+
+On Android, the iAdvize SDK needs to be initiated during the app startup to allow several functionnalities to work. 
+Thus you need to add those lines in `android/app/src/main/java/com/integrationdemoapp/MainApplication.java` to initialize the SDK properly:
+
+```
+$ android/app/src/main/java/com/integrationdemoapp/MainApplication.java
+
+// Add this line
+import com.iadvize.conversation.sdk.IAdvizeSDK;
+
+public class MainApplication extends Application implements ReactApplication {
+
+  ...
+
+  @Override
+  public void onCreate() {
+    super.onCreate();
+    SoLoader.init(this, /* native exopackage */ false);
+    initializeFlipper(this, getReactNativeHost().getReactInstanceManager());
+
+    // Add this line
+    IAdvizeSDK.initiate(this);
+  }
+
+  ...
+}
+```
